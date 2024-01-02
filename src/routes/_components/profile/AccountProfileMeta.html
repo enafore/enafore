@@ -129,9 +129,9 @@
     computed: {
       emojis: ({ account }) => account.emojis || [],
       fields: ({ account }) => account.fields || [],
-      massagedFields: ({ fields, emojis, $autoplayGifs, $disableDecomojiConverter }) => (fields.map(field => ({
+      massagedFields: ({ fields, emojis, $autoplayGifs }) => (fields.map(field => ({
         name: field.name,
-        value: emojifyText(field.value, emojis, $autoplayGifs, $disableDecomojiConverter),
+        value: emojifyText(field.value, emojis, $autoplayGifs),
         verified: !!field.verified_at
       })))
     },

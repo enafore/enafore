@@ -407,7 +407,6 @@ export default {
   reload: 'Reload',
   disableFollowRequestCount: 'Hide follow request count',
   hideLongPosts: 'Collapse long posts without content warnings',
-  disableDecomojiConverter: 'Disable conversion of <span class="decomoji">でこもじ</span> emojis to text',
   // Wellness settings
   wellness: 'Wellness',
   wellnessSettings: 'Wellness settings',

@@ -7,7 +7,7 @@ import { parseHTML } from 'linkedom/worker'
 const { document } = parseHTML('')
 self.document = document
 
-registerPromiseWorker(async ({ originalStatus, autoplayGifs, disableDecomojiConverter, currentVerifyCredentials }) => {
+registerPromiseWorker(async ({ originalStatus, autoplayGifs, currentVerifyCredentials }) => {
   const mfmContent = originalStatus.content_type === 'text/x.misskeymarkdown' ? originalStatus.text : (originalStatus.akkoma && originalStatus.akkoma.source && originalStatus.akkoma.source.mediaType === 'text/x.misskeymarkdown') ? originalStatus.akkoma.source.content : null
   let dom, hashtagsInBar
   const userHost = (currentVerifyCredentials && currentVerifyCredentials.fqn) ? currentVerifyCredentials.fqn.split('@')[1] : new URL(currentVerifyCredentials.url).hostname
@@ -35,7 +35,6 @@ registerPromiseWorker(async ({ originalStatus, autoplayGifs, disableDecomojiConv
       mfmContent,
       originalStatus,
       autoplayGifs,
-      disableDecomojiConverter,
       emojis,
       mentionsByHandle,
       userHost
@@ -45,7 +44,6 @@ registerPromiseWorker(async ({ originalStatus, autoplayGifs, disableDecomojiConv
       content: originalStatus.content,
       tags: originalStatus.tags,
       autoplayGifs,
-      disableDecomojiConverter,
       emojis,
       mentionsByURL,
       userHost

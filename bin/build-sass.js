@@ -2,7 +2,7 @@ import * as sass from 'sass'
 import path from 'path'
 import fs from 'fs'
 import { promisify } from 'util'
-import cssDedoupe from 'css-dedoupe'
+import { minify } from 'csso';
 
 const writeFile = promisify(fs.writeFile)
 const readdir = promisify(fs.readdir)
@@ -15,6 +15,9 @@ const assetsDir = path.join(__dirname, '../static')
 
 async function renderCss (file) {
   const result = await sass.compile(file, { outputStyle: 'compressed' })
+  if (process.env.NODE_ENV === 'production') {
+    return minify(result.css).css
+  }
   return result.css
 }
 
@@ -30,7 +33,6 @@ async function compileThemesSass () {
   const files = (await readdir(themesScssDir)).filter(file => !path.basename(file).startsWith('_') && !path.basename(file).startsWith('.'))
   await Promise.all(files.map(async file => {
     let css = await renderCss(path.join(themesScssDir, file))
-    css = cssDedoupe(css) // remove duplicate custom properties
     const outputFilename = 'theme-' + path.basename(file).replace(/\.scss$/, '.css')
     await writeFile(path.join(assetsDir, outputFilename), css, 'utf8')
     if (outputFilename === 'theme-default.css') {

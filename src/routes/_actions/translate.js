@@ -17,8 +17,7 @@ export function translateStatus (
   const {
     statusTranslations,
     statusTranslationContents,
-    autoplayGifs,
-    disableDecomojiConverter
+    autoplayGifs
   } = store.get()
   statusTranslations[id] = statusTranslations[id] || {}
   statusTranslations[id].show = true
@@ -46,7 +45,6 @@ export function translateStatus (
             '\n\n</span>',
           tags: status.tags,
           autoplayGifs,
-          disableDecomojiConverter,
           emojis,
           mentionsByURL: new Map()
         }).innerHTML

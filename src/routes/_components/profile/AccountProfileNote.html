@@ -30,7 +30,7 @@
     computed: {
       note: ({ account }) => account.note,
       emojis: ({ account }) => account.emojis || [],
-      massagedNote: ({ note, emojis, $autoplayGifs, $disableDecomojiConverter }) => {
+      massagedNote: ({ note, emojis, $autoplayGifs }) => {
         const emojisMap = new Map()
         if (emojis) {
           for (const emoji of emojis) {
@@ -41,7 +41,6 @@
           content: note,
           tags: [],
           autoplayGifs: $autoplayGifs,
-          disableDecomojiConverter: $disableDecomojiConverter,
           emojis: emojisMap,
           mentionsByURL: new Map()
         }).innerHTML

@@ -60,8 +60,8 @@ function rehydrateQuote (originalStatus) {
 
 async function processStatusContent (originalStatus) {
   try {
-    const { autoplayGifs, disableDecomojiConverter, currentVerifyCredentials } = store.get()
-    Object.assign(originalStatus, await worker.postMessage({ originalStatus, autoplayGifs, disableDecomojiConverter, currentVerifyCredentials }))
+    const { autoplayGifs, currentVerifyCredentials } = store.get()
+    Object.assign(originalStatus, await worker.postMessage({ originalStatus, autoplayGifs, currentVerifyCredentials }))
   } catch (e) {
     console.warn('failed to processStatusContent', originalStatus, e)
   }

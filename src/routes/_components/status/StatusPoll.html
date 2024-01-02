@@ -302,9 +302,9 @@
     computed: {
       pollId: ({ originalStatus }) => originalStatus.poll.id,
       poll: ({ originalStatus, $polls, pollId }) => $polls[pollId] || originalStatus.poll,
-      options: ({ poll, originalStatusEmojis, $autoplayGifs, votersOrVotesCount, $disableDecomojiConverter }) => (
+      options: ({ poll, originalStatusEmojis, $autoplayGifs, votersOrVotesCount }) => (
         poll.options.map(({ title, votes_count: optionsVotesCount }, index) => ({
-          title: emojifyText(escapeHtml(title), originalStatusEmojis, $autoplayGifs, $disableDecomojiConverter),
+          title: emojifyText(escapeHtml(title), originalStatusEmojis, $autoplayGifs),
           share: votersOrVotesCount ? Math.round(optionsVotesCount / votersOrVotesCount * 100) : 0,
           ownVote: poll.own_votes.includes(index)
         }))

@@ -8,7 +8,6 @@ export function renderMfm ({
   mfmContent,
   originalStatus,
   autoplayGifs,
-  disableDecomojiConverter,
   emojis,
   mentionsByHandle,
   userHost

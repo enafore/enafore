@@ -29,7 +29,6 @@ export function renderPostHTML ({
   content,
   tags,
   autoplayGifs,
-  disableDecomojiConverter,
   emojis,
   mentionsByURL
 }) {

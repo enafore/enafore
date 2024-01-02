@@ -20,7 +20,7 @@
     computed: {
       emojis: ({ account }) => (account.emojis || []),
       accountName: ({ account }) => (account.display_name || account.username),
-      massagedAccountName: ({ accountName, emojis, $autoplayGifs, $omitEmojiInDisplayNames, $disableDecomojiConverter }) => {
+      massagedAccountName: ({ accountName, emojis, $autoplayGifs, $omitEmojiInDisplayNames }) => {
         accountName = escapeHtml(accountName)
 
         if ($omitEmojiInDisplayNames) { // display name emoji are annoying to some screenreader users
@@ -30,7 +30,7 @@
           }
         }
 
-        return emojifyText(accountName, emojis, $autoplayGifs, $disableDecomojiConverter)
+        return emojifyText(accountName, emojis, $autoplayGifs)
       }
     }
   }
