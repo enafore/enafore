@@ -1,4 +1,4 @@
-import { QuickLRU } from '../_thirdparty/quick-lru/quick-lru.js'
+import { QuickLRU } from '../_thirdparty/quick-lru/quick-lru.ts'
 import { store } from '../_store/store.js'
 const cache = new QuickLRU({ maxSize: 500 })
 function isEmojiSupported (unicode) {

@@ -1,12 +1,12 @@
 // Forked from https://github.com/sindresorhus/quick-lru/blob/16d15d470a8eb87c2a7dd5b80892d9b74f1acd3c/index.js
-// Adds the ability to listen for 'evict' events using an EventEmitter, also removes some unused code
+// removes some unused code
 
-import eventsLightPackage from 'events-light'
-const { EventEmitter } = eventsLightPackage
-
-export class QuickLRU extends EventEmitter {
-  constructor (options = {}) {
-    super()
+export class QuickLRU<KeyType, ValueType> {
+  maxSize: number;
+  cache: Map<KeyType, ValueType>;
+  oldCache: Map<KeyType, ValueType>;
+  _size: number;
+  constructor(options: { maxSize?: number } = {}) {
     if (!(options.maxSize && options.maxSize > 0)) {
       throw new TypeError('`maxSize` must be a number greater than 0')
     }
@@ -17,25 +17,18 @@ export class QuickLRU extends EventEmitter {
     this._size = 0
   }
 
-  _set (key, value) {
+  _set(key: KeyType, value: ValueType) {
     this.cache.set(key, value)
     this._size++
 
     if (this._size >= this.maxSize) {
       this._size = 0
-      if (this.listenerCount('evict')) {
-        for (const key of this.oldCache.keys()) {
-          if (!this.cache.has(key)) {
-            this.emit('evict', this.oldCache.get(key), key)
-          }
-        }
-      }
       this.oldCache = this.cache
       this.cache = new Map()
     }
   }
 
-  get (key) {
+  get(key: KeyType) {
     if (this.cache.has(key)) {
       return this.cache.get(key)
     }
@@ -48,7 +41,7 @@ export class QuickLRU extends EventEmitter {
     }
   }
 
-  set (key, value) {
+  set(key: KeyType, value: ValueType) {
     if (this.cache.has(key)) {
       this.cache.set(key, value)
     } else {
@@ -58,7 +51,7 @@ export class QuickLRU extends EventEmitter {
     return this
   }
 
-  has (key) {
+  has(key: KeyType) {
     return this.cache.has(key) || this.oldCache.has(key)
   }
 
@@ -73,7 +66,7 @@ export class QuickLRU extends EventEmitter {
   //   }
   // }
 
-  delete (key) {
+  delete(key: KeyType) {
     const deleted = this.cache.delete(key)
     if (deleted) {
       this._size--
@@ -82,13 +75,13 @@ export class QuickLRU extends EventEmitter {
     return this.oldCache.delete(key) || deleted
   }
 
-  clear () {
+  clear() {
     this.cache.clear()
     this.oldCache.clear()
     this._size = 0
   }
 
-  getAllKeys () {
+  getAllKeys() {
     const set = new Set()
     for (const key of this.cache.keys()) {
       set.add(key)

@@ -1,7 +1,7 @@
 import BlurhashWorker from '../_workers/blurhash.js'
 import PromiseWorker from 'promise-worker'
 import { RESOLUTION } from '../_static/blurhash.js'
-import { QuickLRU } from '../_thirdparty/quick-lru/quick-lru.js'
+import { QuickLRU } from '../_thirdparty/quick-lru/quick-lru.ts'
 
 // A timeline will typically show 20-30 articles at once in the virtual list. The maximum number
 // of sensitive images per article is 4. 30*4=120, so this is a very conservative number.

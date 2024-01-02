@@ -25,12 +25,16 @@ const createConfig = (input) => {
       'sapper/config/webpack.js',
       'terser-webpack-plugin',
       'webpack',
-      'webpack-bundle-analyzer'
+      'webpack-bundle-analyzer',
+      'webpack-virtual-modules',
+      'csso',
+      'mini-css-extract-plugin'
     ]
   }
 }
 
 export default [
   createConfig('./webpack/webpack.config.js'),
-  createConfig('./webpack/svelte-intl-loader.js')
+  createConfig('./webpack/svelte-intl-loader.js'),
+  createConfig('./webpack/csso-loader.js')
 ]

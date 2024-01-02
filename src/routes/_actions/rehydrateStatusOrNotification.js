@@ -12,6 +12,13 @@ import { emit } from '../_utils/eventBus.js'
 let worker
 export function init () {
   worker = worker || new PromiseWorker(new ProcessContentWorker())
+  if (process.browser) {
+    try {
+      initBlurhash()
+    } catch (err) {
+      console.error('could not start blurhash worker', err)
+    }
+  }
 }
 
 function getActualStatus (statusOrNotification) {
@@ -19,13 +26,6 @@ function getActualStatus (statusOrNotification) {
     get(statusOrNotification, ['status']) ||
     get(statusOrNotification, ['notification', 'status'])
   )
-}
-if (process.browser) {
-  try {
-    initBlurhash()
-  } catch (err) {
-    console.error('could not start blurhash worker', err)
-  }
 }
 
 async function decodeAllBlurhashes (status) {

@@ -61,6 +61,7 @@
     "lodash-es": "^4.17.21",
     "lodash.noop": "^3.0.1",
     "mfm-js": "^0.24.0",
+    "mini-css-extract-plugin": "^2.7.6",
     "npm-run-all": "^4.1.5",
     "page-lifecycle": "^0.1.2",
     "pinch-zoom-element": "^1.1.1",
@@ -72,7 +73,6 @@
     "sapper": "github:easrng/sapper#f28997e60034db21208d0af07909f11a4c77b574",
     "sass": "^1.69.6",
     "stringz": "^2.1.0",
-    "style-loader": "^3.3.3",
     "svelte": "^2.16.1",
     "svelte-extras": "^2.0.2",
     "svelte-loader": "^2.13.6",
@@ -82,8 +82,11 @@
     "tesseract.js": "^5.0.4",
     "tesseract.js-core": "^5.0.0",
     "tiny-queue": "^0.2.1",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3",
     "webpack": "^5.89.0",
     "webpack-bundle-analyzer": "^4.10.1",
+    "webpack-virtual-modules": "^0.6.1",
     "worker-loader": "^3.0.8"
   },
   "devDependencies": {

@@ -1,4 +1,4 @@
-import { QuickLRU } from '../_thirdparty/quick-lru/quick-lru.js'
+import { QuickLRU } from '../_thirdparty/quick-lru/quick-lru.ts'
 
 export const statusesCache = {
   maxSize: 100,
