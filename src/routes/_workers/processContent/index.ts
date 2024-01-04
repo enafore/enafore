@@ -1,17 +1,18 @@
 import registerPromiseWorker from 'promise-worker/register.js'
-import { statusHtmlToPlainText } from '../_utils/statusHtmlToPlainText.js'
-import { computeHashtagBarForStatus } from '../_utils/hashtagBar.js'
-import { renderMfm } from '../_utils/renderMfm.js'
-import { renderPostHTML } from '../_utils/renderPostHTML.js'
-import { parseHTML } from 'linkedom/worker'
-const { document } = parseHTML('')
-self.document = document
+//import { statusHtmlToPlainText } from '../../_utils/statusHtmlToPlainText.js'
+// @ts-ignore
+import { computeHashtagBarForStatus } from './hashtagBar.ts'
+// @ts-ignore
+import { renderMfm } from './mfm.ts'
+//import { renderPostHTML } from '../../_utils/renderPostHTML.js'
+import { type DefaultTreeAdapterMap, defaultTreeAdapter, html, serialize, parseFragment } from 'parse5'
+const { NS: { HTML } } = html
 
 registerPromiseWorker(async ({ originalStatus, autoplayGifs, currentVerifyCredentials }) => {
   const mfmContent = originalStatus.content_type === 'text/x.misskeymarkdown' ? originalStatus.text : (originalStatus.akkoma && originalStatus.akkoma.source && originalStatus.akkoma.source.mediaType === 'text/x.misskeymarkdown') ? originalStatus.akkoma.source.content : null
-  let dom, hashtagsInBar
+  let dom: DefaultTreeAdapterMap["parentNode"], hashtagsInBar: string[]
   const userHost = (currentVerifyCredentials && currentVerifyCredentials.fqn) ? currentVerifyCredentials.fqn.split('@')[1] : new URL(currentVerifyCredentials.url).hostname
-  const emojis = new Map()
+  const emojis = new Map<string, any>()
   if (originalStatus.emojis) {
     for (const emoji of originalStatus.emojis) {
       emojis.set(emoji.shortcode, emoji)
@@ -40,36 +41,47 @@ registerPromiseWorker(async ({ originalStatus, autoplayGifs, currentVerifyCreden
       userHost
     })
   } else {
-    dom = renderPostHTML({
+    dom = parseFragment(originalStatus.content)
+    /*dom = renderPostHTML({
       content: originalStatus.content,
       tags: originalStatus.tags,
       autoplayGifs,
       emojis,
-      mentionsByURL,
-      userHost
-    })
+      mentionsByURL
+    })*/
   };
   ({ dom, hashtagsInBar } = computeHashtagBarForStatus(dom, originalStatus))
   if (originalStatus.mentions) {
-    const extraMentions = originalStatus.mentions.filter(mention => !mention.included)
+    const extraMentions = originalStatus.mentions.filter((mention: any) => !mention.included)
     if (extraMentions.length) {
       let firstBlock = dom
-      while (firstBlock.firstChild && firstBlock.firstChild && firstBlock.firstChild.nodeType === 1 && ['DIV', 'P'].includes(firstBlock.firstChild.tagName)) {
-        firstBlock = firstBlock.firstChild
+      while (firstBlock.childNodes.length && 'tagName' in firstBlock.childNodes[0] && ['div', 'p'].includes(firstBlock.childNodes[0].tagName)) {
+        firstBlock = firstBlock.childNodes[0]
       }
       while (extraMentions.length) {
         const mention = extraMentions.pop()
         if (mention.id === originalStatus.account.id) {
           continue
         }
-        firstBlock.prepend(Object.assign(document.createElement('a'), {
-          className: 'mention',
-          href: `/accounts/${mention.id}`,
-          title: `@${mention.acct}`,
-          textContent: `@${mention.username}`
-        }), ' ')
+        const ele = defaultTreeAdapter.createElement('a', HTML, [
+          {
+            name: 'class',
+            value: 'mention'
+          },
+          {
+            name: 'href',
+            value: '/accounts/' + mention.id
+          },
+          {
+            name: 'title',
+            value: '@' + mention.acct
+          }
+        ])
+        defaultTreeAdapter.insertText(ele, '@' + mention.username)
+        defaultTreeAdapter.insertTextBefore(firstBlock, ' ', firstBlock.childNodes[0])
+        defaultTreeAdapter.insertBefore(firstBlock, ele, firstBlock.childNodes[0])
       }
     }
   }
-  return { content: dom.innerHTML, hashtagsInBar, plainTextContent: statusHtmlToPlainText(originalStatus.content, originalStatus.mentions) }
+  return { content: serialize(dom), hashtagsInBar, /* plainTextContent: statusHtmlToPlainText(originalStatus.content, originalStatus.mentions)*/ }
 })

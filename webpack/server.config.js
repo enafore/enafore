@@ -9,7 +9,7 @@ import { mode, dev, resolve, inlineSvgs, version, isUpstream } from './shared.co
 // (because they're only used on the client side)
 const NOOP_MODULES = [
   '../_workers/blurhash.js',
-  '../_workers/processContent.js',
+  '../_workers/processContent/index.ts',
   'tesseract.js/dist/worker.min.js',
   'tesseract.js/dist/worker.min.js.map',
   'tesseract.js-core/tesseract-core.wasm',
@@ -45,7 +45,7 @@ export default {
       {
         test: /\.ts$/,
         use: 'ts-loader',
-        exclude: /node_modules/,
+        exclude: /node_modules/
       },
       {
         test: /\.html$/,

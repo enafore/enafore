@@ -11,7 +11,7 @@ export default {
   output: config.serviceworker.output(),
   resolve,
   mode,
-  devtool: dev ? 'inline-source-map' : 'source-map',
+  devtool: 'source-map',
   optimization: dev
     ? {}
     : {
@@ -32,8 +32,8 @@ export default {
       {
         test: /\.ts$/,
         use: 'ts-loader',
-        exclude: /node_modules/,
-      },
+        exclude: /node_modules/
+      }
     ]
   },
   plugins: [

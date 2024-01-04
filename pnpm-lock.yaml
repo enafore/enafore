@@ -54,8 +54,8 @@ dependencies:
     specifier: ^5.2.2
     version: 5.2.2(webpack@5.89.0)
   country-flag-emoji-polyfill:
-    specifier: ^0.1.5
-    version: 0.1.5
+    specifier: ^0.1.6
+    version: 0.1.6
   cross-env:
     specifier: ^7.0.3
     version: 7.0.3
@@ -113,9 +113,6 @@ dependencies:
   lingva-scraper:
     specifier: ^1.1.0
     version: 1.1.0
-  linkedom:
-    specifier: ^0.16.5
-    version: 0.16.5
   localstorage-memory:
     specifier: ^1.0.3
     version: 1.0.3
@@ -137,6 +134,9 @@ dependencies:
   page-lifecycle:
     specifier: ^0.1.2
     version: 0.1.2
+  parse5:
+    specifier: ^7.1.2
+    version: 7.1.2
   pinch-zoom-element:
     specifier: ^1.1.1
     version: 1.1.1
@@ -159,8 +159,8 @@ dependencies:
     specifier: github:easrng/sapper#f28997e60034db21208d0af07909f11a4c77b574
     version: github.com/easrng/sapper/f28997e60034db21208d0af07909f11a4c77b574
   sass:
-    specifier: ^1.69.6
-    version: 1.69.6
+    specifier: ^1.69.7
+    version: 1.69.7
   stringz:
     specifier: ^2.1.0
     version: 2.1.0
@@ -740,12 +740,12 @@ packages:
   /@types/eslint-scope@3.7.7:
     resolution: {integrity: sha512-MzMFlSLBqNF2gcHWO0G1vP/YQyfvrxZ0bF+u7mzUdZ1/xK4A4sru+nraZz5i3iEIk1l1uyicaDVTB4QbbEkAYg==}
     dependencies:
-      '@types/eslint': 8.56.0
+      '@types/eslint': 8.56.1
       '@types/estree': 1.0.5
     dev: false
 
-  /@types/eslint@8.56.0:
-    resolution: {integrity: sha512-FlsN0p4FhuYRjIxpbdXovvHQhtlG05O1GG/RNWvdAxTboR438IOTwmrY/vLA+Xfgg06BTkP045M3vpFwTMv1dg==}
+  /@types/eslint@8.56.1:
+    resolution: {integrity: sha512-18PLWRzhy9glDQp3+wOgfLYRWlhgX0azxgJ63rdpoUHyrC9z0f5CkFburjQx4uD7ZCruw85ZtMt6K+L+R8fLJQ==}
     dependencies:
       '@types/estree': 1.0.5
       '@types/json-schema': 7.0.15
@@ -1164,7 +1164,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001572
-      electron-to-chromium: 1.4.616
+      electron-to-chromium: 1.4.620
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.22.2)
     dev: false
@@ -1378,8 +1378,8 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
-  /country-flag-emoji-polyfill@0.1.5:
-    resolution: {integrity: sha512-2pD4PBB7LoQR4eDfKrMOH9kLkl8zUIWNZ8PBFH3auwvJR/3Cf/uFfV/d4iL5gTlEa5FC0arQ6QzaZQFL77BoLQ==}
+  /country-flag-emoji-polyfill@0.1.6:
+    resolution: {integrity: sha512-QPnha89PLiudKAyuZ93evR8MViHXb3sUFFJllidvC01/+1wV6PslmI+tfuyyHcaoBflZfqatSIVGhapXRtOnJg==}
     dev: false
 
   /cross-env@7.0.3:
@@ -1468,10 +1468,6 @@ packages:
     engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0, npm: '>=7.0.0'}
     dependencies:
       css-tree: 2.2.1
-    dev: false
-
-  /cssom@0.5.0:
-    resolution: {integrity: sha512-iKuQcq+NdHqlAcwUY0o/HL69XQrUaQdMjmStJ8JFmUaiiQErlhrmuigkg/CU4E2J0IyUKUrMAgl36TvN67MqTw==}
     dev: false
 
   /debounce@1.2.1:
@@ -1615,8 +1611,8 @@ packages:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: false
 
-  /electron-to-chromium@1.4.616:
-    resolution: {integrity: sha512-1n7zWYh8eS0L9Uy+GskE0lkBUNK83cXTVJI0pU3mGprFsbfSdAc15VTFbo+A+Bq4pwstmL30AVcEU3Fo463lNg==}
+  /electron-to-chromium@1.4.620:
+    resolution: {integrity: sha512-a2fcSHOHrqBJsPNXtf6ZCEZpXrFCcbK1FBxfX3txoqWzNgtEDG1f3M59M98iwxhRW4iMKESnSjbJ310/rkrp0g==}
     dev: false
 
   /emoji-picker-element-data@1.6.0:
@@ -2413,10 +2409,6 @@ packages:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
     dev: false
 
-  /html-escaper@3.0.3:
-    resolution: {integrity: sha512-RuMffC89BOWQoY0WKGpIhn5gX3iI54O6nRA0yC124NYVtzjmFWBIiFd8M0x+ZdX0P9R4lADg1mgP8C7PxGOWuQ==}
-    dev: false
-
   /html-minifier@3.5.21:
     resolution: {integrity: sha512-LKUKwuJDhxNa3uf/LPR/KVjm/l3rBqtYeCOAekvG8F1vItxMUpueGd94i/asDDr8/1u7InxzFA5EeGjhhG5mMA==}
     engines: {node: '>=4'}
@@ -2433,15 +2425,6 @@ packages:
 
   /htmlparser2@8.0.2:
     resolution: {integrity: sha512-GYdjWKDkbRLkZ5geuHs5NY1puJ+PXwP7+fHPRz06Eirsb9ugf6d8kkXav6ADhcODhFFPMIXyxkxSuMf3D6NCFA==}
-    dependencies:
-      domelementtype: 2.3.0
-      domhandler: 5.0.3
-      domutils: 3.1.0
-      entities: 4.5.0
-    dev: false
-
-  /htmlparser2@9.0.0:
-    resolution: {integrity: sha512-uxbSI98wmFT/G4P2zXx4OVx04qWUmyFPrD2/CNepa2Zo3GPNaCaaxElDgwUrwYWkK1nr9fft0Ya8dws8coDLLQ==}
     dependencies:
       domelementtype: 2.3.0
       domhandler: 5.0.3
@@ -2817,19 +2800,9 @@ packages:
     dependencies:
       axios: 0.27.2
       cheerio: 1.0.0-rc.12
-      user-agents: 1.1.71
+      user-agents: 1.1.73
     transitivePeerDependencies:
       - debug
-    dev: false
-
-  /linkedom@0.16.5:
-    resolution: {integrity: sha512-FtcuLuxDtlKWWilm5Z0HgmrfMwO0tOfC6tu47fRXj2/KGEeDSh4ihiDwFKZSbJj6zh520r8XZjZ7v2Jb30HAQA==}
-    dependencies:
-      css-select: 5.1.0
-      cssom: 0.5.0
-      html-escaper: 3.0.3
-      htmlparser2: 9.0.0
-      uhyphen: 0.2.0
     dev: false
 
   /load-json-file@4.0.0:
@@ -3651,8 +3624,8 @@ packages:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
     dev: false
 
-  /sass@1.69.6:
-    resolution: {integrity: sha512-qbRr3k9JGHWXCvZU77SD2OTwUlC+gNT+61JOLcmLm+XqH4h/5D+p4IIsxvpkB89S9AwJOyb5+rWNpIucaFxSFQ==}
+  /sass@1.69.7:
+    resolution: {integrity: sha512-rzj2soDeZ8wtE2egyLXgOOHQvaC2iosZrkF6v3EUG+tBwEvhqUCzm0VP3k9gHF9LXbSrRhT5SksoI56Iw8NPnQ==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -4265,10 +4238,6 @@ packages:
       source-map: 0.6.1
     dev: false
 
-  /uhyphen@0.2.0:
-    resolution: {integrity: sha512-qz3o9CHXmJJPGBdqzab7qAYuW8kQGKNEuoHFYrBwV6hWIMcpAmxDLXojcHfFr9US1Pe6zUswEIJIbLI610fuqA==}
-    dev: false
-
   /unbox-primitive@1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}
     dependencies:
@@ -4306,8 +4275,8 @@ packages:
     dependencies:
       punycode: 2.3.1
 
-  /user-agents@1.1.71:
-    resolution: {integrity: sha512-bcZugUkZHPE8uzdh5OVDvjPuyKECForax9jMPX/deI0tWEvXbJN0cFV670HY38W1v7iKWUco6PrSnR1nW9PfmA==}
+  /user-agents@1.1.73:
+    resolution: {integrity: sha512-HgTw4tGOCgxZWess+KgOrxCoQkZYgZRJE71vsWBhTqE+FdoCmLklYn1Zw42kwJWQFvks44KCvKjmolnbYlbDmQ==}
     dependencies:
       lodash.clonedeep: 4.5.0
     dev: false

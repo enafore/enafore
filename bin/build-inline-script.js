@@ -37,7 +37,7 @@ export async function buildInlineScript () {
   })
   const { output } = await bundle.generate({
     format: 'iife',
-    sourcemap: true
+    sourcemap: 'hidden'
   })
 
   const { code, map } = output[0]
@@ -46,7 +46,7 @@ export async function buildInlineScript () {
   const checksum = crypto.createHash('sha256').update(fullCode, 'utf8').digest('base64')
 
   await writeFile(path.resolve(__dirname, '../src/inline-script/checksum.js'),
-    `export default ${JSON.stringify(checksum)}`, 'utf8')
+    `const checksum=${JSON.stringify(checksum)};console.log(checksum);export default checksum`, 'utf8')
   await writeFile(path.resolve(__dirname, '../static/inline-script.js.map'),
     map.toString(), 'utf8')
 

@@ -5,7 +5,7 @@ import {
   init as initBlurhash
 } from '../_utils/blurhash.js'
 import { store } from '../_store/store.js'
-import ProcessContentWorker from '../_workers/processContent.js'
+import ProcessContentWorker from '../_workers/processContent/index.ts'
 import PromiseWorker from 'promise-worker'
 import { emit } from '../_utils/eventBus.js'
 

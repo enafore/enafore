@@ -2,7 +2,7 @@ import * as sass from 'sass'
 import path from 'path'
 import fs from 'fs'
 import { promisify } from 'util'
-import { minify } from 'csso';
+import { minify } from 'csso'
 
 const writeFile = promisify(fs.writeFile)
 const readdir = promisify(fs.readdir)
@@ -32,7 +32,7 @@ async function compileGlobalSass () {
 async function compileThemesSass () {
   const files = (await readdir(themesScssDir)).filter(file => !path.basename(file).startsWith('_') && !path.basename(file).startsWith('.'))
   await Promise.all(files.map(async file => {
-    let css = await renderCss(path.join(themesScssDir, file))
+    const css = await renderCss(path.join(themesScssDir, file))
     const outputFilename = 'theme-' + path.basename(file).replace(/\.scss$/, '.css')
     await writeFile(path.join(assetsDir, outputFilename), css, 'utf8')
     if (outputFilename === 'theme-default.css') {

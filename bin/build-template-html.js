@@ -5,6 +5,7 @@ import { promisify } from 'util'
 import { buildSass } from './build-sass.js'
 import { buildInlineScript } from './build-inline-script.js'
 import { buildSvg } from './build-svg.js'
+import { buildCSP } from './build-csp.js'
 import { performance } from 'perf_hooks'
 import { debounce } from '../src/routes/_thirdparty/lodash/timers.js'
 import applyIntl from '../webpack/svelte-intl-loader.js'
@@ -28,6 +29,11 @@ const builders = [
     watch: 'src/inline-script/inline-script.js',
     comment: '<!-- inline JS -->',
     rebuild: buildInlineScript
+  },
+  {
+    watch: 'src/inline-script/inline-script.js',
+    comment: '<!-- CSP -->',
+    rebuild: buildCSP
   },
   {
     watch: 'bin/svgs.js',

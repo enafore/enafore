@@ -3,8 +3,6 @@ import { addKnownInstance, deleteKnownInstance } from './knownInstances.js'
 import { migrations } from './migrations.js'
 import { clearAllCaches } from './cache.js'
 import { lifecycle } from '../_utils/lifecycle.js'
-import { scheduleIdleTask } from '../_utils/scheduleIdleTask.js'
-import { del } from '../_thirdparty/idb-keyval/idb-keyval.js'
 
 const openReqs = {}
 const databaseCache = {}
@@ -100,9 +98,4 @@ if (process.browser) {
       })
     }
   })
-
-  // Clean up files that Tesseract.js may have stored. Originally we allowed it to store
-  // stuff in IDB, but now we don't.
-  // TODO: we can remove this after it's been deployed for a while
-  scheduleIdleTask(() => del('./eng.traineddata'))
 }

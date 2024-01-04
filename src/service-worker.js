@@ -155,7 +155,7 @@ self.addEventListener('fetch', event => {
         return response
       }
 
-      for (const [ regex, cache ] of [[ASSETS_ON_DEMAND_CACHE, ASSETS], [WEBPACK_ASSETS_ON_DEMAND_CACHE, WEBPACK_ASSETS]]) {
+      for (const [regex, cache] of [[ASSETS_ON_DEMAND_CACHE, ASSETS], [WEBPACK_ASSETS_ON_DEMAND_CACHE, WEBPACK_ASSETS]]) {
         if (regex.test(url.pathname)) {
           // cache this on-demand
           const response = await fetch(req)
