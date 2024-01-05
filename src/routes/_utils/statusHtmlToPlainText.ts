@@ -1,7 +1,7 @@
 import { DefaultTreeAdapterMap, parseFragment, defaultTreeAdapter } from 'parse5'
 import { mark, stop } from './marks.js'
 
-const blockElements = /^(p|d[dlti][vr]?|a(rticle|side|ddress)|fo(oter|rm)|header|hgroup|main|nav|se(arch|ction)|blockquote|fi(gcaption|gure|eldset)|center|h[r1-6]|menu|[uo]l|li(sting)?|legend|opt(group|ion)|pre|xmp|plaintext|frame|details|summary)$/
+const blockElements = /^(p$|d[dlti]|a[rsd]|fo[or]|mai|na|se[ac]|bl|fi|ce|h|men|[uo]l|li|le|op|pre|x|pl|fr|det|sum)/
 
 export function statusDomToPlainText (doc: DefaultTreeAdapterMap["parentNode"], mentions: any) {
   mark('statusDomToPlainText')
