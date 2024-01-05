@@ -1,5 +1,6 @@
 import registerPromiseWorker from 'promise-worker/register.js'
-//import { statusHtmlToPlainText } from '../../_utils/statusHtmlToPlainText.js'
+// @ts-ignore
+import { statusDomToPlainText } from '../../_utils/statusHtmlToPlainText.ts'
 // @ts-ignore
 import { computeHashtagBarForStatus } from './hashtagBar.ts'
 // @ts-ignore
@@ -83,5 +84,5 @@ registerPromiseWorker(async ({ originalStatus, autoplayGifs, currentVerifyCreden
       }
     }
   }
-  return { content: serialize(dom), hashtagsInBar, /* plainTextContent: statusHtmlToPlainText(originalStatus.content, originalStatus.mentions)*/ }
+  return { content: serialize(dom), hashtagsInBar, plainTextContent: statusDomToPlainText(dom, originalStatus.mentions) }
 })

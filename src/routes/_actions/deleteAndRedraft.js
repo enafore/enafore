@@ -1,4 +1,4 @@
-import { statusHtmlToPlainText } from '../_utils/statusHtmlToPlainText.js'
+import { statusHtmlToPlainText } from '../_utils/statusHtmlToPlainText.ts'
 import { importShowComposeDialog } from '../_components/dialog/asyncDialogs/importShowComposeDialog.js'
 import { doDeleteStatus } from './delete.js'
 import { store } from '../_store/store.js'

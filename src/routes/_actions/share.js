@@ -1,5 +1,5 @@
 import { toast } from '../_components/toast/toast.js'
-import { statusHtmlToPlainText } from '../_utils/statusHtmlToPlainText.js'
+import { statusHtmlToPlainText } from '../_utils/statusHtmlToPlainText.ts'
 import { formatIntl } from '../_utils/formatIntl.js'
 
 export async function shareStatus (status) {
