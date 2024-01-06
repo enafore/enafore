@@ -1,4 +1,4 @@
-import { renderPostHTML } from './renderPostHTML.js'
+import { renderPostHTML } from './renderPostHTML.ts'
 
 export function emojifyText (
   text,
@@ -17,5 +17,5 @@ export function emojifyText (
     autoplayGifs,
     emojis: emojisMap,
     mentionsByURL: new Map()
-  }).innerHTML
+  })
 }

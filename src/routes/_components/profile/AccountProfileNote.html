@@ -23,7 +23,7 @@
 </style>
 <script>
   import { store } from '../../_store/store.js'
-  import { renderPostHTML } from '../../_utils/renderPostHTML.js'
+  import { renderPostHTML } from '../../_utils/renderPostHTML.ts'
 
   export default {
     store: () => store,
@@ -43,7 +43,7 @@
           autoplayGifs: $autoplayGifs,
           emojis: emojisMap,
           mentionsByURL: new Map()
-        }).innerHTML
+        })
       }
     }
   }
