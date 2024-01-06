@@ -5,13 +5,12 @@ import {
   init as initBlurhash
 } from '../_utils/blurhash.js'
 import { store } from '../_store/store.js'
-import ProcessContentWorker from '../_workers/processContent/index.ts'
 import PromiseWorker from 'promise-worker'
 import { emit } from '../_utils/eventBus.js'
 
 let worker
 export function init () {
-  worker = worker || new PromiseWorker(new ProcessContentWorker())
+  worker = worker || new PromiseWorker(new Worker(new URL('../_workers/processContent/index.ts', import.meta.url)))
   if (process.browser) {
     try {
       initBlurhash()

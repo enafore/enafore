@@ -1,4 +1,3 @@
-import BlurhashWorker from '../_workers/blurhash.js'
 import PromiseWorker from 'promise-worker'
 import { RESOLUTION } from '../_static/blurhash.js'
 import { QuickLRU } from '../_thirdparty/quick-lru/quick-lru.ts'
@@ -13,7 +12,7 @@ let canvas
 let canvasContext2D
 
 export function init () {
-  worker = worker || new PromiseWorker(new BlurhashWorker())
+  worker = worker || new PromiseWorker(new Worker(new URL('../_workers/blurhash.js', import.meta.url)))
 }
 
 function initCanvas () {

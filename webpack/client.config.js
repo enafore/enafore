@@ -55,32 +55,6 @@ export default {
   module: {
     rules: [
       {
-        test: (input) => {
-          return input.endsWith(path.join('_workers', 'blurhash.js'))
-        },
-        use: {
-          loader: 'worker-loader',
-          options: {
-            filename: dev
-              ? '[fullhash]/blurhash.[name].js'
-              : 'blurhash.[contenthash].[name].js'
-          }
-        }
-      },
-      {
-        test: (input) => {
-          return input.endsWith(path.join('_workers', 'processContent', 'index.ts'))
-        },
-        use: {
-          loader: 'worker-loader',
-          options: {
-            filename: dev
-              ? '[fullhash]/processContent.[name].js'
-              : 'processContent.[contenthash].[name].js'
-          }
-        }
-      },
-      {
         test: /\.css$/,
         use: [
           MiniCssExtractPlugin.loader,

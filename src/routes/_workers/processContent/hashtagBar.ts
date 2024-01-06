@@ -98,13 +98,11 @@ export function computeHashtagBarForStatus(dom: DefaultTreeAdapterMap["parentNod
   if (dom.childNodes.length) {
     let toRemove: DefaultTreeAdapterMap["childNode"][] = []
     let parent = dom;
-    a: while (true) {
+    a: while (parent.childNodes.length) {
       const lc = parent.childNodes[parent.childNodes.length - 1]
       if (isValidNode(lc)) {
-        console.log('start loop')
         for (let i = parent.childNodes.length - 1; i > -1; i--) {
           const node = parent.childNodes[i]
-          console.log(node)
           if ((defaultTreeAdapter.isElementNode(node) && node.tagName === "br") || (defaultTreeAdapter.isTextNode(node) && node.value.includes('\n'))) {
             toRemove.push(node)
             break

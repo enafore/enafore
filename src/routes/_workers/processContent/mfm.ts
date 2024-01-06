@@ -412,7 +412,7 @@ export function renderMfm({
             }
             const urlToUse = autoplayGifs ? emoji.url : emoji.static_url
             const shortcodeWithColons = `:${emoji.shortcode}:`
-            const ele = defaultTreeAdapter.createElement('a', HTML, [
+            const ele = defaultTreeAdapter.createElement('img', HTML, [
               {
                 name: 'class',
                 value: 'inline-custom-emoji'

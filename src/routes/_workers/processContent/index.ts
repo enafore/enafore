@@ -5,7 +5,8 @@ import { statusDomToPlainText } from '../../_utils/statusHtmlToPlainText.ts'
 import { computeHashtagBarForStatus } from './hashtagBar.ts'
 // @ts-ignore
 import { renderMfm } from './mfm.ts'
-//import { renderPostHTML } from '../../_utils/renderPostHTML.js'
+// @ts-ignore
+import { renderPostHTMLToDOM } from '../../_utils/renderPostHTML.ts'
 import { type DefaultTreeAdapterMap, defaultTreeAdapter, html, serialize, parseFragment } from 'parse5'
 const { NS: { HTML } } = html
 
@@ -42,14 +43,13 @@ registerPromiseWorker(async ({ originalStatus, autoplayGifs, currentVerifyCreden
       userHost
     })
   } else {
-    dom = parseFragment(originalStatus.content)
-    /*dom = renderPostHTML({
+    dom = renderPostHTMLToDOM({
       content: originalStatus.content,
       tags: originalStatus.tags,
       autoplayGifs,
       emojis,
       mentionsByURL
-    })*/
+    })
   };
   ({ dom, hashtagsInBar } = computeHashtagBarForStatus(dom, originalStatus))
   if (originalStatus.mentions) {
