@@ -9,6 +9,7 @@ import { loadPolyfills } from './routes/_utils/polyfills/loadPolyfills.js'
 import { loadNonCriticalPolyfills } from './routes/_utils/polyfills/loadNonCriticalPolyfills.js'
 import { queueMicrotask } from './routes/_utils/queueMicrotask.js'
 import idbReady from 'safari-14-idb-fix'
+import { Analytics } from "@vercel/analytics/react"
 
 const realFocus = HTMLElement.prototype.focus
 HTMLElement.prototype.focus = function (options = {}) {
