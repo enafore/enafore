@@ -35,6 +35,7 @@
     "@rollup/plugin-terser": "^0.4.4",
     "@sucrase/webpack-loader": "^2.0.0",
     "@types/object-inspect": "^1.13.0",
+    "@vercel/analytics": "1.2.2",
     "a11y-dialog": "^8.0.4",
     "arrow-key-navigation": "^1.2.0",
     "cheerio": "1.0.0-rc.12",
