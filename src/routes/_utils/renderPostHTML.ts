@@ -8,6 +8,8 @@ import {
   serialize,
 } from 'parse5'
 import { Mention } from './types.ts'
+import * as hashtag from '../_workers/processContent/hashtagBar.ts'
+
 const {
   NS: { HTML },
 } = html
@@ -58,6 +60,9 @@ export function renderPostHTMLToDOM({
   if (!content) {
     return defaultTreeAdapter.createDocumentFragment()
   }
+  const normalizedTagNames: string[] = tags.map((tag: any) =>
+    tag.name.normalize('NFKC'),
+  )
   const dom = parseFragment(content)
   const customEmoji = [...emojis.keys()].map((e) => escapeRegExp(e)).join('|')
   const unicodeEmoji = getEmojiRegex().source
@@ -162,36 +167,45 @@ export function renderPostHTMLToDOM({
     let rel = anchor.attrs.find((attr) => attr.name === 'rel')
     if (rel == null) rel = { name: 'rel', value: '' }
     const classList = c.value.split(/\s+/g)
-    const relList = rel.value.split(/\s+/g)
-    rel.value = 'nofollow noopener ugc'
     anchor.attrs = [c, rel]
     if (href != null) {
       anchor.attrs.push(href)
     }
+    let tag: string | boolean
     if (
       href != null &&
-      (classList.includes('hashtag') || relList.includes('tag'))
+      (tag = hashtag.isValidHashtagNode(anchor, normalizedTagNames)) &&
+      typeof tag === 'string'
     ) {
-      for (const tag of tags) {
-        if (
-          decodeURIComponent(href.value)
-            .toLowerCase()
-            .endsWith(`/${tag.name.toLowerCase()}`)
-        ) {
-          href.value = `/tags/${encodeURIComponent(tag.name)}`
-          c.value = 'hashtag'
-          rel.value += ' tag'
-          anchor.childNodes = []
-          defaultTreeAdapter.insertText(anchor, `#${tag.name}`)
-          return
+      let isFriendica = href.value.includes('/search?tag=')
+      if (isFriendica) {
+        isFriendica = false
+        const parent = anchor.parentNode
+        if (parent) {
+          const index = parent.childNodes.indexOf(anchor)
+          const previousSibling = parent.childNodes[index - 1]
+          if (
+            previousSibling &&
+            defaultTreeAdapter.isTextNode(previousSibling) &&
+            previousSibling.value.endsWith('#')
+          ) {
+            isFriendica = true
+          }
         }
       }
+      href.value = `/tags/${encodeURIComponent(tag)}`
+      c.value = 'hashtag'
+      rel.value = 'nofollow noopener ugc tag'
+      anchor.childNodes = []
+      defaultTreeAdapter.insertText(anchor, (isFriendica ? '' : '#') + tag)
+      return
     } else if (href != null && classList.includes('mention')) {
       const mention = mentionsByURL.get(href.value)
       if (mention != null) {
         mention.included = true
         href.value = `/accounts/${mention.id}`
         c.value = 'mention'
+        rel.value = 'nofollow noopener ugc'
         anchor.attrs.push({ name: 'title', value: `@${mention.acct}` })
         anchor.childNodes = []
         defaultTreeAdapter.insertText(anchor, `@${mention.username}`)
@@ -202,6 +216,7 @@ export function renderPostHTMLToDOM({
       { name: 'title', value: href != null ? href.value : '' },
       { name: 'target', value: '_blank' },
     )
+    rel.value = 'nofollow noopener ugc'
     c.value = ''
   }
   function walkElements(node: DefaultTreeAdapterMap['parentNode']): void {

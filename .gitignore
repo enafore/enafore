@@ -4,6 +4,7 @@
 /mastodon
 /mastodon.log
 /src/template.html
+/static/.well-known
 /static/*.css
 /static/icons.svg
 /static/inline-script.js.map

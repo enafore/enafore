@@ -22,7 +22,11 @@ export function notificationObservers () {
   store.observe('numberOfNotifications', (numberOfNotifications) => {
     const { disableNotificationSound } = store.get()
     if (!disableNotificationSound && numberOfNotifications > previousNumberOfNotifications) {
-      (audio || (audio = new Audio('/boop.mp3'))).play()
+      try {
+        (audio || (audio = new Audio('/boop.mp3'))).play()
+      } catch (_) {
+        // ignore
+      }
     }
     previousNumberOfNotifications = numberOfNotifications
   })
