@@ -141,8 +141,8 @@
   "author": "easrng",
   "license": "AGPL-3.0-only",
   "bugs": {
-    "url": "https://github.com/enafore/enafore/issues"
+    "url": "https://github.com/orbitalmartian8/orbitfore/issues"
   },
-  "homepage": "https://github.com/enafore/enafore#readme",
+  "homepage": "https://github.com/orbitalmartian8/orbitfore#readme",
   "pre-commit": "lint"
 }
