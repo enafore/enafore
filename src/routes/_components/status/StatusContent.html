@@ -75,6 +75,10 @@
     text-decoration: underline;
   }
 
+  :global(.status-content img:not(.inline-custom-emoji)) {
+    max-width: 100%;
+  }
+
   @media (max-width: 240px) {
     :global(
       .status-content p:last-child,

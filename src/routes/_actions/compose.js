@@ -106,7 +106,7 @@ export function setReplyVisibility (realm, replyVisibility) {
     return // user has already set the postPrivacy
   }
   const { currentVerifyCredentials } = store.get()
-  const defaultVisibility = currentVerifyCredentials.source.privacy
+  const defaultVisibility = currentVerifyCredentials.source.privacy || 'public'
   const visibility = PRIVACY_LEVEL[replyVisibility] < PRIVACY_LEVEL[defaultVisibility]
     ? replyVisibility
     : defaultVisibility

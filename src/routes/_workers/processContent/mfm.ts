@@ -426,6 +426,10 @@ export function renderMfm({
                 name: 'rel',
                 value: 'tag',
               },
+              {
+                name: 'data-tag',
+                value: token.props.hashtag,
+              },
             ])
             defaultTreeAdapter.insertText(ele, '#' + token.props.hashtag)
             defaultTreeAdapter.appendChild(parent, ele)

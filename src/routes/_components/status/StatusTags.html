@@ -1,6 +1,6 @@
 <div class="status-hashtag-bar {isStatusInNotification ? 'status-in-notification' : '' }">
   {#each hashtagsInBar as hashtagInBar}
-  <a href="/tags/{encodeURIComponent(hashtagInBar)}" class="hashtag" rel="nofollow noopener ugc tag">#{hashtagInBar}</a>
+  <a href="/tags/{encodeURIComponent(hashtagInBar.value)}" class="hashtag" rel="nofollow noopener ugc tag" title="{hashtagInBar.display ? hashtagInBar.value : ''}">#{hashtagInBar.display || hashtagInBar.value}</a>
   {/each}
 </div>
 <style>

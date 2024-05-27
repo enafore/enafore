@@ -8,11 +8,68 @@ import {
   serialize,
 } from 'parse5'
 import { Mention } from './types.ts'
-import * as hashtag from '../_workers/processContent/hashtagBar.ts'
+import {
+  normalizeHashtag,
+  localeAwareInclude,
+} from '../_workers/processContent/hashtagBar.ts'
 
 const {
   NS: { HTML },
 } = html
+
+function isNodeLinkHashtag(element: DefaultTreeAdapterMap['element']): boolean {
+  if (element.tagName === 'a') {
+    const c = element.attrs.find((attr) => /*  */ attr.name === 'class')
+    const r = element.attrs.find((attr) => attr.name === 'rel')
+    const h = element.attrs.find((attr) => attr.name === 'href')
+    return (
+      !!c?.value.split(/\s+/g).includes('hashtag') ||
+      !!r?.value.split(/\s+/g).includes('tag') ||
+      !!h?.value?.match(/\/tags\/[^\/]+$|\/search\?tag=/) // GtS and Friendica, respectively
+    )
+  }
+  return false
+}
+
+function textContent(node: DefaultTreeAdapterMap['parentNode']): string[] {
+  let text = []
+  for (const child of node.childNodes) {
+    if (defaultTreeAdapter.isTextNode(child)) {
+      text.push(child.value)
+    } else if ('childNodes' in child) {
+      text.push(...textContent(child))
+    }
+  }
+  return text
+}
+
+const isValidHashtagNode = (
+  node: DefaultTreeAdapterMap['node'],
+  normalizedTagNames: string[],
+) => {
+  if (!node) {
+    return false
+  }
+  let text: string
+  if (
+    defaultTreeAdapter.isElementNode(node) &&
+    isNodeLinkHashtag(node) &&
+    (text = textContent(node).join(''))
+  ) {
+    const normalized = normalizeHashtag(text)
+    if (!localeAwareInclude(normalizedTagNames, normalized)) {
+      // stop here, this is not a real hashtag, so consider it as text
+      return false
+    }
+    return normalized
+  } else if (!defaultTreeAdapter.isTextNode(node) || node.value.trim()) {
+    // not a space
+    return false
+  } else {
+    // spaces
+    return true
+  }
+}
 
 function consumeBalanced(
   string: string,
@@ -174,10 +231,14 @@ export function renderPostHTMLToDOM({
     let tag: string | boolean
     if (
       href != null &&
-      (tag = hashtag.isValidHashtagNode(anchor, normalizedTagNames)) &&
+      (tag = isValidHashtagNode(anchor, normalizedTagNames)) &&
       typeof tag === 'string'
     ) {
       let isFriendica = href.value.includes('/search?tag=')
+      const wafrnMatch = href.value.match(/\/dashboard\/search\/([^\/]+)$/)
+      const wafrnTag = wafrnMatch
+        ? decodeURIComponent(wafrnMatch[1]!)
+        : undefined
       if (isFriendica) {
         isFriendica = false
         const parent = anchor.parentNode
@@ -196,8 +257,25 @@ export function renderPostHTMLToDOM({
       href.value = `/tags/${encodeURIComponent(tag)}`
       c.value = 'hashtag'
       rel.value = 'nofollow noopener ugc tag'
+      anchor.attrs.push({
+        name: 'data-tag',
+        value: tag,
+      })
+      if (wafrnTag) {
+        anchor.attrs.push({
+          name: 'data-wafrn-tag',
+          value: wafrnTag,
+        })
+        anchor.attrs.push({
+          name: 'title',
+          value: tag,
+        })
+      }
       anchor.childNodes = []
-      defaultTreeAdapter.insertText(anchor, (isFriendica ? '' : '#') + tag)
+      defaultTreeAdapter.insertText(
+        anchor,
+        (isFriendica ? '' : '#') + (wafrnTag ? wafrnTag : tag),
+      )
       return
     } else if (href != null && classList.includes('mention')) {
       const mention = mentionsByURL.get(href.value)

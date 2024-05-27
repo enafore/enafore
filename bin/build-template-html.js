@@ -20,16 +20,18 @@ const DEBOUNCE = 500
 
 const builders = [
   {
+    watch: 'src/inline-script/inline-script.js',
+    comment: '<meta http-equiv="Content-Security-Policy" content="default-src \'none\'" />',
+    rebuild: buildInlineScript
+  },
+  {
     watch: 'src/scss',
     comment: '<!-- inline CSS -->',
     rebuild: buildSass
   },
   {
     watch: 'src/inline-script/inline-script.js',
-    comment: String.raw`<!--( CSP )--
-</head>
-<body>
-  --( inline JS )-->`,
+    comment: '<!-- inline JS -->',
     rebuild: buildInlineScript
   },
   {
@@ -87,12 +89,13 @@ function doWatch () {
 
 async function buildAll () {
   const start = performance.now()
+  const context = {}
   let html = (await Promise.all(partials.map(async partial => {
     if (typeof partial === 'string') {
       return partial
     }
     if (!partial.result) {
-      partial.result = partial.comment + '\n' + (await partial.rebuild())
+      partial.result = (partial.comment[1] === '!' ? (partial.comment + '\n') : '') + (await partial.rebuild(context))
     }
     return partial.result
   }))).join('')

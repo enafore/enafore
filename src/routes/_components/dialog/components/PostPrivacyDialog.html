@@ -49,7 +49,7 @@
         return POST_PRIVACY_OPTIONS.find(_ => _.key === postPrivacyKey)
       },
       postPrivacyKey: ({ composeData, $currentVerifyCredentials }) => {
-        return composeData.postPrivacy || $currentVerifyCredentials.source.privacy
+        return composeData.postPrivacy || $currentVerifyCredentials.source.privacy || 'public'
       },
       localOnly: ({ composeData }) => {
         return composeData.localOnly

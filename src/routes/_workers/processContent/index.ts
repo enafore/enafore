@@ -23,7 +23,8 @@ registerPromiseWorker(
             originalStatus.akkoma.source.mediaType === 'text/x.misskeymarkdown'
           ? originalStatus.akkoma.source.content
           : null
-    let dom: DefaultTreeAdapterMap['parentNode'], hashtagsInBar: string[]
+    let dom: DefaultTreeAdapterMap['parentNode'],
+      hashtagsInBar: { display?: string; value: string }[]
     const userHost =
       currentVerifyCredentials && currentVerifyCredentials.fqn
         ? currentVerifyCredentials.fqn.split('@')[1]

@@ -13,7 +13,7 @@ import { sapperInlineScriptChecksums } from '../src/server/sapperInlineScriptChe
 const __dirname = path.dirname(new URL(import.meta.url).pathname)
 const writeFile = promisify(fs.writeFile)
 
-export async function buildInlineScript () {
+async function buildInlineScriptAndCSP () {
   const inlineScriptPath = path.join(__dirname, '../src/inline-script/inline-script.js')
 
   const bundle = await rollup({
@@ -63,5 +63,18 @@ export async function buildInlineScript () {
   ].join(';')
   await writeFile(path.resolve(__dirname, '../static/inline-script.js.map'),
     map.toString(), 'utf8')
-  return `<meta http-equiv="Content-Security-Policy" content="${policy}" /></head><body><script>${fullCode}</script>`
+  return {
+    inlineScript: `<script>${fullCode}</script>`,
+    csp: `<meta http-equiv="Content-Security-Policy" content="${policy}" />`
+  }
+}
+
+export function buildInlineScript (context) {
+  if (context.inlineScript) {
+    return context.inlineScript
+  } else {
+    const promise = buildInlineScriptAndCSP()
+    context.inlineScript = promise.then(e => e.inlineScript)
+    return promise.then(e => e.csp)
+  }
 }

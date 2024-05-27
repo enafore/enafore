@@ -1,23 +1,9 @@
 import { type DefaultTreeAdapterMap, defaultTreeAdapter } from 'parse5'
 
-function normalizeHashtag(hashtag: string): string {
+export function normalizeHashtag(hashtag: string): string {
   return (
     hashtag !== '' && hashtag.startsWith('#') ? hashtag.slice(1) : hashtag
   ).normalize('NFKC')
-}
-
-function isNodeLinkHashtag(element: DefaultTreeAdapterMap['element']): boolean {
-  if (element.tagName === 'a') {
-    const c = element.attrs.find((attr) => attr.name === 'class')
-    const r = element.attrs.find((attr) => attr.name === 'rel')
-    const h = element.attrs.find((attr) => attr.name === 'href')
-    return (
-      !!c?.value.split(/\s+/g).includes('hashtag') ||
-      !!r?.value.split(/\s+/g).includes('tag') ||
-      !!h?.value?.match(/\/tags\/[^\/]+$|\/search\?tag=/) // GtS and Friendica, respectively
-    )
-  }
-  return false
 }
 
 /**
@@ -49,7 +35,10 @@ const collator = new Intl.Collator(undefined, {
   sensitivity: 'base', // we use this to emulate the ASCII folding done on the server-side, hopefuly more efficiently
 })
 
-function localeAwareInclude(collection: string[], value: string): boolean {
+export function localeAwareInclude(
+  collection: string[],
+  value: string,
+): boolean {
   const normalizedValue = value.normalize('NFKC')
 
   return Boolean(
@@ -71,31 +60,25 @@ function walkElements(
   }
 }
 
-function textContent(node: DefaultTreeAdapterMap['parentNode']): string[] {
-  let text = []
-  for (const child of node.childNodes) {
-    if (defaultTreeAdapter.isTextNode(child)) {
-      text.push(child.value)
-    } else if ('childNodes' in child) {
-      text.push(...textContent(child))
-    }
-  }
-  return text
-}
-
-export const isValidHashtagNode = (
+const isValidHashtagNode = (
   node: DefaultTreeAdapterMap['node'],
   normalizedTagNames: string[],
+  wafrnTags: Map<string, string>,
 ) => {
   if (!node) {
     return false
   }
-  let text: string
+  let text: string | undefined
   if (
     defaultTreeAdapter.isElementNode(node) &&
-    isNodeLinkHashtag(node) &&
-    (text = textContent(node).join(''))
+    (text = node.attrs.find((attr) => attr.name === 'data-tag')?.value)
   ) {
+    let wafrnTag
+    if (
+      (wafrnTag = node.attrs.find((attr) => attr.name === 'data-wafrn-tag'))
+    ) {
+      wafrnTags.set(text, wafrnTag.value)
+    }
     const normalized = normalizeHashtag(text)
     if (!localeAwareInclude(normalizedTagNames, normalized)) {
       // stop here, this is not a real hashtag, so consider it as text
@@ -116,12 +99,12 @@ export function computeHashtagBarForStatus(
   status: any,
 ): {
   dom: DefaultTreeAdapterMap['parentNode']
-  hashtagsInBar: string[]
+  hashtagsInBar: { display?: string; value: string }[]
 } {
   // this is returned if we stop the processing early, it does not change what is displayed
   const defaultResult: {
     dom: DefaultTreeAdapterMap['parentNode']
-    hashtagsInBar: string[]
+    hashtagsInBar: { display?: string; value: string }[]
   } = {
     dom,
     hashtagsInBar: [],
@@ -136,7 +119,8 @@ export function computeHashtagBarForStatus(
     tag.name.normalize('NFKC'),
   )
 
-  const hashtagsInBar = []
+  let hashtagsInBar = []
+  const wafrnTags = new Map<string, string>()
 
   if (dom.childNodes.length > 0) {
     let toRemove: Array<DefaultTreeAdapterMap['childNode']> = []
@@ -144,17 +128,41 @@ export function computeHashtagBarForStatus(
     let parent = dom
     a: while (parent.childNodes.length > 0) {
       const lc = parent.childNodes[parent.childNodes.length - 1]!
-      if (isValidHashtagNode(lc, normalizedTagNames)) {
+      if (isValidHashtagNode(lc, normalizedTagNames, wafrnTags)) {
         for (let i = parent.childNodes.length - 1; i > -1; i--) {
+          const lastSibling = parent.childNodes[i - 1]
           const node = parent.childNodes[i]!
+          // Sharkey
           if (
+            defaultTreeAdapter.isElementNode(node) &&
+            node.tagName === 'span'
+          ) {
+            const lastChild = node.childNodes[node.childNodes.length - 1]
+            if (
+              lastChild &&
+              defaultTreeAdapter.isElementNode(lastChild) &&
+              lastChild.tagName === 'br'
+            ) {
+              toRemove.push(lastChild)
+              break
+            }
+          }
+          if (
+            // Akkoma
             (defaultTreeAdapter.isElementNode(node) && node.tagName === 'br') ||
-            (defaultTreeAdapter.isTextNode(node) && node.value.includes('\n'))
+            // Generic
+            (defaultTreeAdapter.isTextNode(node) &&
+              (node.value.includes('\n') ||
+                // Wafrn
+                (node.value.trim().length === 0 &&
+                  lastSibling &&
+                  defaultTreeAdapter.isElementNode(lastSibling) &&
+                  lastSibling.tagName === 'p')))
           ) {
             toRemove.push(node)
             break
           }
-          const tag = isValidHashtagNode(node, normalizedTagNames)
+          const tag = isValidHashtagNode(node, normalizedTagNames, wafrnTags)
           if (tag) {
             toRemove.push(node)
             if (typeof tag === 'string') {
@@ -187,7 +195,7 @@ export function computeHashtagBarForStatus(
 
   const contentHashtags: string[] = []
   walkElements(dom, (ele) => {
-    const tag = isValidHashtagNode(ele, normalizedTagNames)
+    const tag = isValidHashtagNode(ele, normalizedTagNames, wafrnTags)
     if (typeof tag === 'string') {
       contentHashtags.push(tag)
     }
@@ -199,8 +207,21 @@ export function computeHashtagBarForStatus(
     }),
   )
 
+  hashtagsInBar = uniqueHashtagsWithCaseHandling(hashtagsInBar)
+
   return {
     dom,
-    hashtagsInBar: uniqueHashtagsWithCaseHandling(hashtagsInBar),
+    hashtagsInBar: wafrnTags.size
+      ? hashtagsInBar.map((tag) => {
+          const wafrnTag = wafrnTags.get(tag)
+          const tagObject: { value: string; display?: string } = { value: tag }
+          if (wafrnTag) {
+            tagObject.display = wafrnTag
+          }
+          return tagObject
+        })
+      : hashtagsInBar.map((tag) => {
+          return { value: tag }
+        }),
   }
 }
