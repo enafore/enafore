@@ -20,7 +20,7 @@ export default {
     </p>
   `,
   // Manifest
-  newStatus: 'New post',
+  newStatus: 'New toot',
   // Generic UI
   loading: 'Loading',
   okay: 'OK',
@@ -61,7 +61,7 @@ export default {
   local: 'Local',
   notifications: 'Notifications',
   mutedUsers: 'Muted users',
-  pinnedStatuses: 'Pinned posts',
+  pinnedStatuses: 'Pinned toots',
   followRequests: 'Follow requests',
   followRequestsLabel: `Follow requests {hasFollowRequests, select,
     true {({count})}
@@ -130,7 +130,7 @@ export default {
       }
       to switch columns
     </li>
-    <li><kbd>7</kbd> or <kbd>c</kbd> to compose a new post</li>
+    <li><kbd>7</kbd> or <kbd>c</kbd> to compose a new toot</li>
     <li><kbd>s</kbd> or <kbd>/</kbd> to search</li>
     <li><kbd>g</kbd> + <kbd>h</kbd> to go home</li>
     <li><kbd>g</kbd> + <kbd>n</kbd> to go to notifications</li>
@@ -144,8 +144,8 @@ export default {
     <li><kbd>Backspace</kbd> to go back, close dialogs</li>
   `,
   timelineHotkeys: `
-    <li><kbd>j</kbd> or <kbd>↓</kbd> to activate the next post</li>
-    <li><kbd>k</kbd> or <kbd>↑</kbd> to activate the previous post</li>
+    <li><kbd>j</kbd> or <kbd>↓</kbd> to activate the next toot</li>
+    <li><kbd>k</kbd> or <kbd>↑</kbd> to activate the previous toot</li>
     <li><kbd>.</kbd> to show more and scroll to top</li>
     <li><kbd>o</kbd> to open</li>
     <li><kbd>f</kbd> to favorite</li>
@@ -277,35 +277,35 @@ export default {
   additionalComments: 'Additional comments',
   forwardDescription: 'Forward to the moderators of {instance} as well?',
   forwardLabel: 'Forward to {instance}',
-  unableToLoadStatuses: 'Unable to load recent posts: {error}',
+  unableToLoadStatuses: 'Unable to load recent toots: {error}',
   report: 'Report',
   noContent: '(No content)',
-  noStatuses: 'No posts to report',
+  noStatuses: 'No toots to report',
   // Status options
   unpinFromProfile: 'Unpin from profile',
   pinToProfile: 'Pin to profile',
   muteConversation: 'Mute conversation',
   unmuteConversation: 'Unmute conversation',
-  bookmarkStatus: 'Bookmark post',
-  unbookmarkStatus: 'Unbookmark post',
+  bookmarkStatus: 'Bookmark toot',
+  unbookmarkStatus: 'Unbookmark toot',
   deleteAndRedraft: 'Delete and redraft',
-  reportStatus: 'Report post',
-  translateStatus: 'Translate post',
-  translated: `Translated post from {from}{detected, select,
+  reportStatus: 'Report toot',
+  translateStatus: 'Translate toot',
+  translated: `Translated toot from {from}{detected, select,
     true { - Detected}
     other {}
   }`,
-  translateError: 'There was an error translating this post',
+  translateError: 'There was an error translating this toot',
   translating: 'Translating...',
   hideTranslation: 'Hide translation',
-  reactToStatus: 'React to post',
-  quoteStatus: 'Quote post',
-  shareStatus: 'Share post',
-  copyLinkToStatus: 'Copy link to post',
+  reactToStatus: 'React to toot',
+  quoteStatus: 'Quote toot',
+  shareStatus: 'Share toot',
+  copyLinkToStatus: 'Copy link to toot',
   // Account profile
   profileForAccount: 'Profile for {account}',
   statisticsAndMoreOptions: 'Stats and more options',
-  statuses: 'Posts',
+  statuses: 'Toots',
   follows: 'Follows',
   followers: 'Followers',
   moreOptions: 'More options',
@@ -338,10 +338,10 @@ export default {
   verified: 'Verified',
   // About page
   about: 'About',
-  aboutApp: 'About Enafore',
+  aboutApp: 'About Orbitalfore',
   aboutAppDescription: `
   <p>
-    Enafore is <a rel="noopener" target="_blank" href="https://github.com/enafore/enafore">open-source</a> software.
+    Orbitalfore is <a rel="noopener" target="_blank" href="https://github.com/orbitalmartian8/orbitfore">open-source</a> software.
   </p>
 
   <div class="donate-banner ui-settings">
@@ -506,7 +506,7 @@ export default {
   newFollowers: 'New followers',
   reblogs: 'Boosts',
   pollResults: 'Poll results',
-  subscriptions: 'Subscribed posts',
+  subscriptions: 'Subscribed toots',
   needToReauthenticate: 'You need to reauthenticate in order to enable push notification. Log out of {instance}?',
   failedToUpdatePush: 'Failed to update push notification settings: {error}',
   // Themes
@@ -547,12 +547,12 @@ export default {
     one {1 time}
     other {{count} times}
   }`,
-  pinnedStatus: 'Pinned post',
-  rebloggedYou: 'boosted your post',
-  favoritedYou: 'favorited your post',
+  pinnedStatus: 'Pinned toot',
+  rebloggedYou: 'boosted your toot',
+  favoritedYou: 'favorited your toot',
   reacted: 'reacted with an emoji',
   followedYou: 'followed you',
-  edited: 'edited their post',
+  edited: 'edited their toot',
   requestedFollow: 'requested to follow you',
   reported: 'filed a report',
   signedUp: 'signed up',
@@ -568,14 +568,14 @@ export default {
   clickToShowSensitive: 'Sensitive content. Click to show.',
   longPost: 'Long post',
   // Accessible status labels
-  accountRebloggedYou: '{account} boosted your post',
-  accountFavoritedYou: '{account} favorited your post',
-  accountEdited: '{account} edited their post',
+  accountRebloggedYou: '{account} boosted your toot',
+  accountFavoritedYou: '{account} favorited your toot',
+  accountEdited: '{account} edited their toot',
   rebloggedByAccount: '{account} boosted {original}',
   contentWarningContent: 'Content warning: {spoiler}',
   hasMedia: 'has media',
   hasPoll: 'has poll',
-  shortStatusLabel: '{privacy} post by {account}',
+  shortStatusLabel: '{privacy} toot by {account}',
   // Privacy types
   public: 'Public',
   unlisted: 'Unlisted',
@@ -639,14 +639,14 @@ export default {
   unblockedAccount: 'Unblocked account',
   unableToBlock: 'Unable to block account: {error}',
   unableToUnblock: 'Unable to unblock account: {error}',
-  bookmarkedStatus: 'Bookmarked post',
-  unbookmarkedStatus: 'Unbookmarked post',
+  bookmarkedStatus: 'Bookmarked toot',
+  unbookmarkedStatus: 'Unbookmarked toot',
   unableToBookmark: 'Unable to bookmark: {error}',
   unableToUnbookmark: 'Unable to unbookmark: {error}',
-  cannotPostOffline: 'You cannot post while offline',
+  cannotPostOffline: 'You cannot toot while offline',
   unableToPost: 'Unable to post: {error}',
-  statusDeleted: 'Post deleted',
-  unableToDelete: 'Unable to delete post: {error}',
+  statusDeleted: 'Toot deleted',
+  unableToDelete: 'Unable to delete toot: {error}',
   cannotFavoriteOffline: 'You cannot favorite while offline',
   cannotUnfavoriteOffline: 'You cannot unfavorite while offline',
   unableToFavorite: 'Unable to favorite: {error}',
@@ -666,9 +666,9 @@ export default {
   unmutedConversation: 'Unmuted conversation',
   unableToMuteConversation: 'Unable to mute conversation: {error}',
   unableToUnmuteConversation: 'Unable to unmute conversation: {error}',
-  unpinnedStatus: 'Unpinned post',
-  unableToPinStatus: 'Unable to pin post: {error}',
-  unableToUnpinStatus: 'Unable to unpin post: {error}',
+  unpinnedStatus: 'Unpinned toot',
+  unableToPinStatus: 'Unable to pin toot: {error}',
+  unableToUnpinStatus: 'Unable to unpin toot: {error}',
   unableToRefreshPoll: 'Unable to refresh poll: {error}',
   unableToVoteInPoll: 'Unable to vote in poll: {error}',
   cannotReblogOffline: 'You cannot boost while offline.',
@@ -730,7 +730,7 @@ export default {
   statusOptions: 'Status options',
   confirm: 'Confirm',
   closeDialog: 'Close dialog',
-  postPrivacy: 'Post privacy',
+  postPrivacy: 'Toot privacy',
   localOnly: 'Local only',
   contentType: 'Content type',
   contentTypeLabel: 'Change content type (currently {label})',
