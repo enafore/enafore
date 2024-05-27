@@ -3,7 +3,7 @@ import getGoogleTranslateHTML from './googleTranslateHTML.js'
 
 to regenerate, run this on https://simplytranslate.org/?engine=google
 
-```js
+```js */
 const source = [...document.querySelector('[name=from]').options].map(e=>[e.value, e.textContent])
 const target = [...document.querySelector('[name=to]').options].map(e=>[e.value, e.textContent])
 console.log(`const sharedLanguageNames = ${JSON.stringify(Object.fromEntries(source.filter(e=>target.find(a=>a.join()===e.join()))), null, 2)};
@@ -13,7 +13,7 @@ ${JSON.stringify(Object.fromEntries(source.filter(e=>!target.find(a=>a.join()===
 export const targetLanguageNames = {
   ...sharedLanguageNames,
 ${JSON.stringify(Object.fromEntries(target.filter(e=>!source.find(a=>a.join()===e.join()))), null, 2).slice(2)}`)
-```
+/* ```
 
 */
 const sharedLanguageNames = {
