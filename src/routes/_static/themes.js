@@ -6,9 +6,15 @@ const themes = [
     color: 'royalblue'
   },
     {
+    name: 'rosepinedawn',
+    label: 'intl.themeRosepinedawn',
+    dark: false,
+    color: '#b4637a'
+  },
+  {
     name: 'rosepine',
     label: 'intl.themeRosepine',
-    dark: false,
+    dark: true,
     color: '#b4637a'
   },
   {
