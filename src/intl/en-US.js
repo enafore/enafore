@@ -583,7 +583,7 @@ export default {
   direct: 'Direct',
   // Themes
   themeRoyal: 'Light',
-  themeRosepine: 'Rose Pine Dawn',
+  themeRosepinedawn: 'Rose Pine Dawn',
   themeScarlet: 'Scarlet',
   themeSeafoam: 'Seafoam',
   themeHotpants: 'Hotpants',
@@ -593,6 +593,7 @@ export default {
   themeGecko: 'Gecko',
   themeGrayscale: 'Grayscale',
   themeOzark: 'Ozark',
+  themeRosepine: 'Rose Pine',
   themeCobalt: 'Cobalt',
   themeSorcery: 'Sorcery',
   themePunk: 'Punk',
