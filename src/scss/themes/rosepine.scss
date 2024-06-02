@@ -1,5 +1,5 @@
 $main-theme-color: #eb6f92;
-$body-bg-color: lighten($main-theme-color, 38%);
+$body-bg-color: $main-bg-color;
 $anchor-color: $main-theme-color;
 $main-text-color: #e0def4;
 $border-color: #31748f;
