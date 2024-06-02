@@ -1,0 +1,14 @@
+$main-theme-color: #eb6f92;
+$body-bg-color: lighten($main-theme-color, 38%);
+$anchor-color: $main-theme-color;
+$main-text-color: #e0def4;
+$border-color: #31748f;
+$main-bg-color: #191724;
+$secondary-text-color: #908caa;
+$toast-border: #c4a7e7;
+$toast-bg: #26233a;
+$focus-outline: lighten($main-theme-color, 30%);
+$compose-background: lighten($main-theme-color, 32%);
+
+@import "_base.scss";
+@import "_dark_scrollbars.scss";
