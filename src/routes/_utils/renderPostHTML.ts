@@ -231,10 +231,7 @@ export function renderPostHTMLToDOM({
         if (emoji == null) {
           newNodes.push(`:${customEmoji}:`)
         } else {
-          let urlToUse = emoji.url
-          if (autoplayGifs) {
-            urlToUse = emoji.static_url ?? emoji.url
-          }
+          const urlToUse = autoplayGifs ? emoji.url : emoji.static_url ?? emoji.url;
           const shortcodeWithColons = `:${emoji.shortcode}:`
           const ele = defaultTreeAdapter.createElement('img', HTML, [
             { name: 'class', value: 'inline-custom-emoji' },
