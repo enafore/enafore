@@ -1,6 +1,6 @@
 # Enafore
 
-A fediverse client with better support for Akkoma, glitch-soc, and Iceshrimp instances.
+A fediverse client with better support for Pleroma, Akkoma, glitch-soc, and Iceshrimp instances.
 
 Enafore is available at [enafore.social](https://enafore.social).
 
