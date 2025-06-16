@@ -6,7 +6,7 @@ export const DEFAULT_MEDIA_HEIGHT = 250
 export const ONE_TRANSPARENT_PIXEL =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='
 
-export const MEDIA_ALT_CHAR_LIMIT = 420
+export const MEDIA_ALT_CHAR_LIMIT = 1500
 
 const acceptedFileTypes = [
   '.3gp',
