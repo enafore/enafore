@@ -5,6 +5,7 @@ import {
   MAX_STATUS_MEDIA_ATTACHMENTS,
   MAX_STATUS_POLL_OPTIONS
 } from '../../_static/statuses.js'
+import { MEDIA_ALT_CHAR_LIMIT } from '../../_static/media.js'
 import { POLL_EXPIRY_OPTIONS } from '../../_static/polls.js'
 
 function computeForInstance (store, computedKey, key, defaultValue) {
@@ -216,6 +217,23 @@ export function instanceComputations (store) {
         }
       }
       return MAX_STATUS_CHARS
+    }
+  )
+
+  store.compute(
+    'maxMediaDescChars',
+    ['currentInstanceInfo'],
+    (currentInstanceInfo) => {
+      if (currentInstanceInfo) {
+        if (
+          currentInstanceInfo.configuration &&
+          currentInstanceInfo.configuration.media_attachments &&
+          currentInstanceInfo.configuration.media_attachments.description_limit
+        ) {
+          return currentInstanceInfo.configuration.media_attachments.description_limit
+        }
+        return MEDIA_ALT_CHAR_LIMIT
+      }
     }
   )
 

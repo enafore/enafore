@@ -12,12 +12,12 @@
   <LengthGauge
     {length}
     {overLimit}
-    max={mediaAltCharLimit}
+    max={$maxMediaDescChars}
   />
   <LengthIndicator
     {length}
     {overLimit}
-    max={mediaAltCharLimit}
+    max={$maxMediaDescChars}
     style="width: 100%; text-align: right;"
   />
   <button class="extract-text-button" type="button"
@@ -100,7 +100,6 @@
   import { throttleTimer } from '../../../_utils/throttleTimer.js'
   import { get } from '../../../_utils/lodash-lite.js'
   import { store } from '../../../_store/store.js'
-  import { MEDIA_ALT_CHAR_LIMIT } from '../../../_static/media.js'
   import LengthGauge from '../../LengthGauge.html'
   import LengthIndicator from '../../LengthIndicator.html'
   import { length } from 'stringz'
@@ -124,14 +123,13 @@
     store: () => store,
     data: () => ({
       rawText: '',
-      mediaAltCharLimit: MEDIA_ALT_CHAR_LIMIT,
       extracting: false,
       className: '',
       extractionProgress: 0
     }),
     computed: {
       length: ({ rawText }) => length(rawText || ''),
-      overLimit: ({ mediaAltCharLimit, length }) => length > mediaAltCharLimit,
+      overLimit: ({ $maxMediaDescChars, length }) => length > $maxMediaDescChars,
       url: ({ media, index }) => get(media, [index, 'data', 'url']),
       mediaId: ({ media, index }) => get(media, [index, 'data', 'id']),
       extractButtonText: ({ extracting }) => extracting ? 'intl.extractingText' : 'intl.extractText',
