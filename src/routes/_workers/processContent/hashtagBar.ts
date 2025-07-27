@@ -148,7 +148,7 @@ export function computeHashtagBarForStatus(
             }
           }
           if (
-            // Akkoma
+            // Pleroma / Akkoma
             (defaultTreeAdapter.isElementNode(node) && node.tagName === 'br') ||
             // Generic
             (defaultTreeAdapter.isTextNode(node) &&
