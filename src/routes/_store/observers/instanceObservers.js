@@ -62,7 +62,12 @@ async function refreshInstanceData (instanceName) {
 
 function stream (store, instanceName, currentInstanceInfo) {
   const { accessToken } = store.get()
-  const streamingApi = currentInstanceInfo.urls.streaming_api
+  let streamingApi
+  if (currentInstanceInfo.configuration.urls.streaming) {
+    streamingApi = currentInstanceInfo.configuration.urls.streaming
+  } else {
+    streamingApi = currentInstanceInfo.urls.streaming_api
+  }
   const firstStatusId = store.getFirstTimelineItemId(instanceName, 'home')
   const firstNotificationId = store.getFirstTimelineItemId(instanceName, 'notifications')
 
